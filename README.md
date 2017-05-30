@@ -447,6 +447,9 @@ Category URI. Everything after the root and no slash is needed in the beginning.
 
 ## Changelog ##
 
+**Version 2.2.1** 
+Updated package.json to enable better NPM compatability.
+
 **Version 2.2.0** 
 New method `renderProducts` to pass productIDs directly to renderer bypassing filtering.
 
