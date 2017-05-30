@@ -436,6 +436,9 @@ Category URI. Everything after the root and no slash is needed in the beginning.
 
 ## Changelog ##
 
+**Version 2.0.0** 
+Rebranded to refilt. All classes changed not compatible with earlier versions without modification.
+
 **Version 1.11.1** 
 Categories weren't showing up when filtering on campaign pages. Now working. `canonicalUri` for product links to work correctly.
 
