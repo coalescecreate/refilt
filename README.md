@@ -1,10 +1,11 @@
-# ysFilter - For filtering and sorting products returned from Silk API. #
+# refilt - For filtering and sorting products based on a JSON object. #
 
-A jQuery plugin that asynchronously loads in a JSON of all the product data in the current category. The plugin is able to be manipulated with a range of callbacks and properties that allow you to change the default properties.
+This repo is a clone of [ysFilter](https://github.com/youngskilled/js-filter) and has been created for further development in other directions.  
+Refilt is a jQuery plugin that asynchronously loads in a JSON of all the product data in the current category. The plugin is able to be manipulated with a range of callbacks and properties that allow you to change the default properties.
 
 ## Background ##
 
-Beneath the whole filter is a very basic html product list with the only functionality being paging. Products are ideally only shown once and URL's are kept to a minimum. This follows our philosophy at Young/Skilled that a website should be perfectly accessible with javascript even turned off. 
+Beneath the whole filter is a very basic html product list with the only functionality being paging. Products are ideally only shown once and URL's are kept to a minimum.
 This means when the page is indexed the default HTML page is the only page that is indexed because the javascript adds all the functionality in a separate layer. 
 To enable sharing the page's hash is updated every time a filter selection is made which is not seen by a search engine as being a new page. This is also semantically correct in that we are effectively just showing the same content, similar to how an anchor shows the same content but a different section of that content.
 This plugin uses a JSON string that has all the information for all the products that are displayed. On every filtering the results are shown nearly instantly as there are no requests being sent or received making the filter more responsive.
@@ -17,12 +18,12 @@ jQuery > 1.7
 
 ### Usage ###
 
-Initiate with `$(selector).ysFilter({'some':'property'});`   
-Invoke methods with `$(selector).ysFilter('method', {'some':'property'});`   
+Initiate with `$(selector).refilt({'some':'property'});`   
+Invoke methods with `$(selector).refilt('method', {'some':'property'});`   
 All classes and ids used in properties should omit `.` and `#`
 Example
 
-	$('#ysFilter').ysFilter({
+	$('#refilt').refilt({
 		debug: true,
 		appendItems: true
 	});
@@ -32,7 +33,7 @@ Example
 
 This is the basic page structure required for the filter to work.
 	
-	<div id="ysFilter" data-url="" data-category="">
+	<div id="refilt" data-url="" data-category="">
     <div class="filterControls" data-type="">
       <div id="color" class="filterControls-group" data-type="<!-- See "Data Types" below -->" data-create="<!-- See "Data Create" below -->">
         <!-- HTML is appended here so it's ok to have elements here. -->
@@ -51,12 +52,12 @@ This is the basic page structure required for the filter to work.
 	</div>
 
 Following classes are added to the filter during different phases.  
-`ysFilter--loading`,`ysFilter--init`,`ysFilter--filtered`,`ysFilter--loaded`
+`refilt--loading`,`refilt--init`,`refilt--filtered`,`refilt--loaded`
 
 
 The following structure you can use in combination with Emmet for tab completion.
 
-	div#ysFilter[data-url="" data-category=""]>div.filterControls[data-type=""]+div#filterItems+div.filterPaging>a.filterPaging-prev+a.filterPaging-all+a.filterPaging-next
+	div#refilt[data-url="" data-category=""]>div.filterControls[data-type=""]+div#filterItems+div.filterPaging>a.filterPaging-prev+a.filterPaging-all+a.filterPaging-next
 
 ### Properties ###
 
@@ -68,7 +69,7 @@ The following structure you can use in combination with Emmet for tab completion
 
 How many items to be rendered per page.
 
-	$(selector).ysFilter({limit: 20})
+	$(selector).refilt({limit: 20})
 
 #### splitSizes ####
 
@@ -77,7 +78,7 @@ How many items to be rendered per page.
 
 Splits sizes into groups based on size chart otherwise they are presented as one group.
 
-	$(selector).ysFilter({splitSizes: false})
+	$(selector).refilt({splitSizes: false})
 
 #### appendItems ####
 
@@ -86,7 +87,7 @@ Splits sizes into groups based on size chart otherwise they are presented as one
 
 Whether to replace items or to append new items with regards to paging.
 
-	$(selector).ysFilter({appendItems: false})
+	$(selector).refilt({appendItems: false})
 
 #### updateWHash ####
 
@@ -95,7 +96,7 @@ Whether to replace items or to append new items with regards to paging.
 
 Update other elements on the page by appending hash to those URL's like e.g. product URL's.
 
-	$(selector).ysFilter({updateWHash: false})
+	$(selector).refilt({updateWHash: false})
 
 #### filterOptions ####
 
@@ -104,7 +105,7 @@ Update other elements on the page by appending hash to those URL's like e.g. pro
 
 Extend filter HTML with predefined variables. See Filter Variables below.
 
-	$(selector).ysFilter({filterOptions: {
+	$(selector).refilt({filterOptions: {
 		color: {
 			background: true
 		}
@@ -117,7 +118,7 @@ Extend filter HTML with predefined variables. See Filter Variables below.
 
 Using several images on product listing for roll overs etc.
 
-	$(selector).ysFilter({multipleImgs: false})
+	$(selector).refilt({multipleImgs: false})
 
 #### onItemIndex ####
 
@@ -133,7 +134,7 @@ Used in conjunction with onItem. After a certain amount of products built do thi
 
 Specify a container where you would like the current filters which are selected to be outputted. If in the filter controls you have an anchor it will copy that with all the classes removing any ID's into this field. Otherwise it will create an anchor per filter.
 
-	$(selector).ysFilter({outputChosenFiltersId: 'js-filtersChosen-list'})
+	$(selector).refilt({outputChosenFiltersId: 'js-filtersChosen-list'})
 
 #### forceHex ####
 
@@ -142,7 +143,7 @@ Specify a container where you would like the current filters which are selected 
 
 Make the renderer use hex when rendering products and filter. Used in conjunction with background color/images for related products and color filter controls.
 
-	$(selector).ysFilter({forceHex: false})
+	$(selector).refilt({forceHex: false})
 
 #### sortFiltersAlphabetically ####
 
@@ -151,7 +152,7 @@ Make the renderer use hex when rendering products and filter. Used in conjunctio
 
 Sort filters/dropdowns menu to be shown in alphabetical order.
 
-	$(selector).ysFilter({sortFiltersAlphabetically: false})
+	$(selector).refilt({sortFiltersAlphabetically: false})
 	
 #### alsoMatchChildrenCategories ####
 
@@ -160,7 +161,7 @@ Sort filters/dropdowns menu to be shown in alphabetical order.
 
 Seeting this to true allows to also add children category products to filter.
 
-	$(selector).ysFilter({alsoMatchChildrenCategories: false})
+	$(selector).refilt({alsoMatchChildrenCategories: false})
 
 
 #### onItem ####
@@ -169,7 +170,7 @@ Seeting this to true allows to also add children category products to filter.
 
 Can add an extra string on a specific item index to be used in conjunction with onItemIndex. Length of items to be rendered also displayed. This is often used in handling banners in category views.
 
-	$(selector).ysFilter({eachItemAttrs: function(length) {
+	$(selector).refilt({eachItemAttrs: function(length) {
 		//number of items in array
 		//Add string here
 		return returnExtraString;
@@ -183,7 +184,7 @@ Add / manipulate obj that renders the template.
 Extend object with new properties and add new curly braces in the template that match these.
 Expects an object to be returned.
 
-	$(selector).ysFilter({eachItemAttrs: function($this, currentItem, i) {
+	$(selector).refilt({eachItemAttrs: function($this, currentItem, i) {
 		//Manipulate Item
 		return currentItem;
 	}})
@@ -196,7 +197,7 @@ Add extra items to each item rendered.
 Replace strings, only *desc* is supported at the moment.
 Expects an object to be returned.
 
-	$(selector).ysFilter({eachFilterAttrs: function(currentItem) {
+	$(selector).refilt({eachFilterAttrs: function(currentItem) {
 		//Manipulate Filter Item
 		return currentItem;
 	}})
@@ -207,7 +208,7 @@ Expects an object to be returned.
 
 Create a callback to allow extra functionality after filters are built.
 
-	$(selector).ysFilter({afterFilterRendered: function() {
+	$(selector).refilt({afterFilterRendered: function() {
 		//Do something now. (uniform, chosen)
 	}})
 
@@ -219,7 +220,7 @@ Create a callback to allow extra functionality after filters are built.
 Good for removing elements before filtering.
 One variable is passed of type string defining a complete replace or an append.
 
-	$(selector).ysFilter({beforeItemsRendered: function(type) {
+	$(selector).refilt({beforeItemsRendered: function(type) {
 		//Do something before products are loaded.
 		if(type === 'replace') ...
 	}})
@@ -235,7 +236,7 @@ Three variables are passed through.
 `renderArray` The original filter object. Be mindful of changes to this so that you don't mutate the object.  
 `renderArray` An array of objects containing items html and their original variables.  
 
-	$(selector).ysFilter({beforeItemsRendered: function(insertType, filterObj, renderArray) {
+	$(selector).refilt({beforeItemsRendered: function(insertType, filterObj, renderArray) {
 		for(i = 0; i < renderArray.length; i++) {
 			html += renderArray[i].html;
 		}
@@ -253,7 +254,7 @@ Three variables are passed through.
 
 Using several images on product listing for roll overs etc.
 
-	$(selector).ysFilter({afterItemsRendered: function() {
+	$(selector).refilt({afterItemsRendered: function() {
 		//Do something after products are loaded.
 	}})
 
@@ -264,7 +265,7 @@ Using several images on product listing for roll overs etc.
 
 Callback to update filter styles manually after changes. Filter object sent as a variable.
 
-	$(selector).ysFilter({onFilterChanged: function(filterObj) {
+	$(selector).refilt({onFilterChanged: function(filterObj) {
 		//Do something after filtering is finished.
 		for(var filter in filterObj) { ... }
 	}})
@@ -276,7 +277,7 @@ Callback to update filter styles manually after changes. Filter object sent as a
 
 A string to be placed in render template for using Sale or News. A space is always added in the code before the class name.
 
-	$(selector).ysFilter({
+	$(selector).refilt({
 		classProductNew: 'product-new',
 		classProductSale: 'product-sale'
 	})
@@ -289,7 +290,7 @@ A string to be placed in render template for using Sale or News. A space is alwa
 Enables filter to work on campaign pages where filterable products are selected based on if the product has the `newProduct` or `showAsOnSale` attribute set to `true`. This is because other pages use categories to filter these values.   
 **Important** `canonicalUri` needs to be included as product data for product links to work correctly.
 
-	$(selector).ysFilter({
+	$(selector).refilt({
 		newsURI: 'new-arrivals',
 		saleURI: 'sale'
 	})
@@ -577,7 +578,7 @@ Tidied up several issues. All product URL's hashes are updated on filter change.
 Fixed an issue regarding reloading of category products. Not all products were reloaded.
 
 **Version 0.2.4 - Branch beforeAPI** 
-Fixed problems with urls not assigning root correctly. Fixed sort of currencies that are prefixed with something other than a number. Fixed fallback for filters when sort was first selected. Also added ysFilter-init as a class on the filter.
+Fixed problems with urls not assigning root correctly. Fixed sort of currencies that are prefixed with something other than a number. Fixed fallback for filters when sort was first selected. Also added refilt-init as a class on the filter.
 
 **Version 0.2.3** 
 Paging problems. Hash didn't have parseInt. Special use case for images where the image was connected to a variant despite there being no variants.
@@ -685,5 +686,5 @@ Some helper functions not mentioned above.
 
 ## Contact ##
 
-This is a small plugin by Young Skilled.
-Contact [support](mailto:support@youngskilled.com) for more details about this plugin.
+This is repo is maintained by Coalesce Create if you would like the original please see [ysFilter](https://github.com/youngskilled/js-filter).  
+Contact [richard](mailto:richard@coalescecreate.com) for more details about this plugin.

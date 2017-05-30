@@ -1,12 +1,11 @@
 {
-  "name": "ys-filter",
-  "version": "1.11.1",
-  "description": "For filtering and sorting products returned from Silk API.",
+  "name": "refilt",
+  "version": "1.12.0",
+  "description": "For filtering and sorting products based on a JSON object.",
   "main": "dev/index.html",
-  "homepage": "http://youngskilled.com",
-  "author": "richard@youngskilled.com Young/Skilled",
+  "homepage": "http://coalescecreate.com",
+  "author": "richard@coalescecreate.com Coalesce Create",
   "license": "MIT",
-  "private": true,
   "devDependencies": {
     "browser-sync": "^2.8.0",
     "gulp": "^3.8.10",

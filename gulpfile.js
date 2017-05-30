@@ -19,7 +19,7 @@ var vars = {
 	distDir: 'dist/',
 	bowerJquery: 'bower_components/jquery/dist/jquery.js',
 	bowerNormalize: 'bower_components/normalize-scss',
-	pluginName: 'ysFilter'
+	pluginName: 'refilt'
 };
 
 
@@ -56,20 +56,9 @@ gulp.task('update-index', ['clean-live'], function() {
 		.pipe(gulp.dest(vars.distDir));
 });
 
-gulp.task('update-scss', ['clean-live'], function() {
-	return gulp.src([vars.devDir+'css/sass/_'+vars.pluginName+'.scss'])
-		.pipe(gulp.dest(vars.distDir+'css'));
-});
-
 gulp.task('update-js', ['clean-live'], function() {
 	return gulp.src([vars.devDir+'js/'+vars.pluginName+'.js'])
 		.pipe(gulp.dest(vars.distDir+'js'));
-});
-
-gulp.task('publish-css', ['clean-live'], function() {
-	return gulp.src(vars.devDir+'css/main.css')
-		.pipe(minifycss({keepBreaks: true}))
-		.pipe(gulp.dest(vars.distDir+'css'));
 });
 
 gulp.task('publish-js', ['clean-live'], function() {
@@ -83,7 +72,7 @@ gulp.task('publish-js', ['clean-live'], function() {
 
 // Publish
 gulp.task('publish', function() {
-	gulp.start('update-index', 'update-js', 'update-scss', 'publish-css', 'publish-js');
+	gulp.start('update-index', 'update-js', 'publish-js');
 });
 
 //////////////////////////////////////////

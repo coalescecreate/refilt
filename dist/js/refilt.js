@@ -16,7 +16,7 @@
 			}
 
 			//Allow css to handle display while loading.
-			$this.addClass('ysFilter--loading ysFilter--init');
+			$this.addClass('refilt--loading refilt--init');
 			$this.set.currentHash = window.location.hash;
 
 			//Reassigning of deprecated variable in filterOptions
@@ -26,7 +26,7 @@
 			if($this.set.currentHash === '#' || $this.set.currentHash === '') {
 				$this.set.currentHash = '';
 			} else {
-				$this.addClass('ysFilter--filtered');
+				$this.addClass('refilt--filtered');
 				//Adds the hash to relevant URLs that are not products.
 				if($this.set.updateWHash !== false) {
 					$('.' + $this.set.updateWHash).each(function() {
@@ -339,7 +339,7 @@
 			}
 
 			//Filter is loaded and ready to use.
-			$this.removeClass('ysFilter--loading ysFilter--filtered').addClass('ysFilter--loaded');
+			$this.removeClass('refilt--loading refilt--filtered').addClass('refilt--loaded');
 			
 			//Trigger callback for added functionality
 			if($this.set.afterFilterRendered !== undefined) {
@@ -523,7 +523,7 @@
 				$this.set.filteredBy.page = 1;
 				$this.set.currentHash = '';
 
-				if($this.set.outputChosenFiltersId !== false) $('#' + $this.set.outputChosenFiltersId).find('#js-ysFilterElements').remove();
+				if($this.set.outputChosenFiltersId !== false) $('#' + $this.set.outputChosenFiltersId).find('#js-refiltElements').remove();
 
 				window.location.hash = $this.set.currentHash;
 				$(window).scrollTop(currentScroll);
@@ -606,7 +606,7 @@
 
 			var $this = this;
 			var filterObj = $this.set.filteredBy;
-			var str = '<div id="js-ysFilterElements">';
+			var str = '<div id="js-refiltElements">';
 
 			//Update elements based on what's in the object.
 			var prepareString = function(cat, value, type) {
@@ -642,7 +642,7 @@
 
 			str += '</div>';
 
-			$('#' + $this.set.outputChosenFiltersId).find('#js-ysFilterElements').remove();
+			$('#' + $this.set.outputChosenFiltersId).find('#js-refiltElements').remove();
 			$('#' + $this.set.outputChosenFiltersId).append(str);
 
 		},
@@ -917,9 +917,9 @@
 
 			if(!shouldReturn) {
 				if(filters > 0) {
-					$this.addClass('ysFilter--filtered');
+					$this.addClass('refilt--filtered');
 				} else {
-					$this.removeClass('ysFilter--filtered');
+					$this.removeClass('refilt--filtered');
 				}
 
 				priv.updateFilterHTML.apply($this, [filters, renderItems, totalItems]);
@@ -1831,7 +1831,7 @@
 		pages: 1
 	};
 
-	$.fn.ysFilter = function(method) {
+	$.fn.refilt = function(method) {
 
 		//arguments local variable to all functions.
 		if (methods[method]) {
@@ -1841,7 +1841,7 @@
 			//If method is an "object" (can also be an array) or no arguments passed to the function.
 			return methods.init.apply(this, arguments);
 		} else {
-			$.error('Method ' + method + ' does not exist on jQuery.ysFilter');
+			$.error('Method ' + method + ' does not exist on jQuery.refilt');
 		}
 
 	};
