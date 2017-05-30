@@ -1304,7 +1304,6 @@
 				}
 			}
 
-
 			if($this.set.appendItems && $this.set.pages !== 1 && $this.set.filteredBy.page !== 1 && $this.set.initialLoad === false) {
 				if($this.set.beforeItemsRendered !== undefined) $this.set.beforeItemsRendered('append');
 				if($this.set.customRender !== undefined) {
@@ -1780,6 +1779,21 @@
 				priv.init.apply($this);
 				$this.data($this.set);
 
+			});
+		},
+		renderProducts: function(options, productsToRender, filter) {
+			var init = $.extend({}, defaultOpts, options);
+
+			return this.each(function() {
+				var $this = $(this);
+				var objectData = $this.data();
+				var uniqueItems = priv.unique(productsToRender.slice(0));
+
+				$this.set = $.extend({}, init, objectData, privateOpts);
+				$this.filter = $.extend(true, {}, filter);
+				$this.set.currentItems = priv.keysToItems.apply($this, [uniqueItems]);
+
+				priv.renderItems.apply($this);
 			});
 		}
 	};

@@ -59,6 +59,17 @@ The following structure you can use in combination with Emmet for tab completion
 
 	div#refilt[data-url="" data-category=""]>div.filterControls[data-type=""]+div#filterItems+div.filterPaging>a.filterPaging-prev+a.filterPaging-all+a.filterPaging-next
 
+### Methods ###
+
+#### renderProducts ####
+
+Pass filtered product IDs for client side rendering of products. This method will even ensure unique values.  
+`productIDs` are an array of ID's to be displayed.  
+`filterObj` is the obj which the plugin normally requires itself.
+
+	$(selector).redils('renderProducts', options, productIDs, filterObj);
+
+
 ### Properties ###
 
 
@@ -435,6 +446,9 @@ Category URI. Everything after the root and no slash is needed in the beginning.
 
 
 ## Changelog ##
+
+**Version 2.2.0** 
+New method `renderProducts` to pass productIDs directly to renderer bypassing filtering.
 
 **Version 2.1.0** 
 Added support for module imports.
