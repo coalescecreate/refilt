@@ -436,6 +436,9 @@ Category URI. Everything after the root and no slash is needed in the beginning.
 
 ## Changelog ##
 
+**Version 2.1.0** 
+Added support for module imports.
+
 **Version 2.0.0** 
 Rebranded to refilt. All classes changed not compatible with earlier versions without modification.
 
