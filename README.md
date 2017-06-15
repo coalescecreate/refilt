@@ -470,6 +470,9 @@ Category URI. Everything after the root and no slash is needed in the beginning.
 
 ## Changelog ##
 
+**Version 2.3.1** 
+Missed publishing changes to dist.
+
 **Version 2.3.0** 
 Added two new properties to extend the functionality `historyCategories` `filterProducts`. Fixed clicking off s1 properties.
 
