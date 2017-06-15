@@ -164,15 +164,38 @@ Make the renderer use hex when rendering products and filter. Used in conjunctio
 Sort filters/dropdowns menu to be shown in alphabetical order.
 
 	$(selector).refilt({sortFiltersAlphabetically: false})
-	
+
 #### alsoMatchChildrenCategories ####
 
 *Default* `false`  
 *Expects* `boolean`
 
-Seeting this to true allows to also add children category products to filter.
+Setting this to true allows to also add children category products to filter.
 
 	$(selector).refilt({alsoMatchChildrenCategories: false})
+
+#### historyCategories ####
+
+*Default* `false`  
+*Expects* `boolean`
+
+Using push history to change URLs as well as update hash when needed. Allowing the user to navigate from child categories to parent and even grandparent categories without having to reload the page, making a more SEO friendly website.   
+To use create filter elements with ids starting with `categories_` create the rest of the filters by adding the rest of the category url replacing `/` with `_` i.e. `categories_shop_watches`  
+You can create more than one filter and still use the `categories` filter.  
+Not recommended for a large product base as this doesn't refine the JSON object in any way and that might cause speed issues.
+
+	$(selector).refilt({historyCategories: true})
+
+
+#### filterProducts ####
+
+*Default* `false, array`  
+*Expects* `boolean`
+
+Filter products based on an array of values. The products are filtered out at the last step before pagination is worked out.  
+The value is an array of arrays i.e. `[[productKey, valueToMatch], ...]` `valueToMatch` in this case is the value if true when looping through products keeps the product in the array. False removes the product from the listing.
+
+	$(selector).refilt({historyCategories: true})
 
 
 #### onItem ####
@@ -446,6 +469,9 @@ Category URI. Everything after the root and no slash is needed in the beginning.
 
 
 ## Changelog ##
+
+**Version 2.3.0** 
+Added two new properties to extend the functionality `historyCategories` `filterProducts`. Fixed clicking off s1 properties.
 
 **Version 2.2.1** 
 Updated package.json to enable better NPM compatability.
