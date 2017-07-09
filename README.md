@@ -470,6 +470,9 @@ Category URI. Everything after the root and no slash is needed in the beginning.
 
 ## Changelog ##
 
+**Version 2.3.5** 
+historyCategories should even be set on root category.
+
 **Version 2.3.4** 
 Categories that don't have any history filters should display filter as per default with prefiltered choices. Fixed some minor bugs regarding selecting of s1 attributes in standard non-history mode. Fixed issue of combining filterProducts and other preFilter items.
 

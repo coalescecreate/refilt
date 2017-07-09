@@ -125,8 +125,9 @@
 						$filters.each(function() {
 							if($(this).attr('id').indexOf('categories') !== -1) {
 								var whichCategories = $(this).attr('id').replace('categories_', '').replace(/_/g, '/');
+								var rootCategory = whichCategories.split('/')[0];
 
-								if ($this.set.category.indexOf(whichCategories) === -1) {
+								if ($this.set.category.indexOf(whichCategories) === -1 && $this.set.category !== rootCategory) {
 									// Not a history category. unset historyCategories.
 									$this.set.historyCategories = false;
 								}
