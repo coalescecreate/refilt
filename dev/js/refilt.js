@@ -111,7 +111,59 @@
 				isSale = $this.set.category === $this.set.saleURI;
 				$this.set.isCampaignURL = (isNewArrivals || isSale);
 
+				if($this.set.isCampaignURL) {
+					for (i = 0; i < products.length; i++) {
+						if(isNewArrivals && products[i].price.newProduct) tmpArr[tmpArr.length] = products[i].id;
+						if(isSale && products[i].price.showAsOnSale) tmpArr[tmpArr.length] = products[i].id;
+					}
+				} else {
+					if($this.set.historyCategories) {
+						// If we are using history categories but not in one of those categories prefilter items
+						var	$filters = $this.find('.' + $this.set.groupClass);
+						var hasCategories = false;
+
+						$filters.each(function() {
+							if($(this).attr('id').indexOf('categories') !== -1) {
+								var whichCategories = $(this).attr('id').replace('categories_', '').replace(/_/g, '/');
+
+								if ($this.set.category.indexOf(whichCategories) === -1) {
+									// Not a history category. unset historyCategories.
+									$this.set.historyCategories = false;
+								}
+								hasCategories = true;
+							}
+						});
+						if (!hasCategories) $this.set.historyCategories = false;
+					}
+
+					if(!$this.set.historyCategories) {
+						/* Only match current category */
+						var categoryRegex = '^' + $this.set.category + '$';
+						for(var category in categories) {
+
+							if($this.set.alsoMatchChildrenCategories) {
+								/* Match all children categories */
+								categoryRegex = '^' + $this.set.category;
+							}
+
+							/* Add matching categories products to list of products still available to filter */
+							var testCorrectCategory = new RegExp(categoryRegex);
+
+							if(testCorrectCategory.test(category)) {
+								tmpArr[i] = categories[category];
+								i++;
+							}
+						}
+					}
+				}
+
+				//These are all the relevant items for the rest of the filtering.
+				renderItems = Array.prototype.concat.apply([], tmpArr);
+				renderItems = priv.unique(renderItems);
+
 				if ($this.set.filterProducts !== false) {
+					tmpArr = [];
+
 					products.forEach(function(item) { 
 						for (var i = 0; i < $this.set.filterProducts.length; i++) {
 							if (item[$this.set.filterProducts[i][0]] === $this.set.filterProducts[i][1]) {
@@ -120,35 +172,10 @@
 							}
 						}
 					});
+					
+					renderItems = renderItems.length === 0 ? tmpArr : priv.intersect(renderItems, tmpArr);
 				}
-
-				if($this.set.isCampaignURL) {
-					for (i = 0; i < products.length; i++) {
-						if(isNewArrivals && products[i].price.newProduct) tmpArr[tmpArr.length] = products[i].id;
-						if(isSale && products[i].price.showAsOnSale) tmpArr[tmpArr.length] = products[i].id;
-					}
-				} else if(!$this.set.historyCategories) {
-					/* Only match current category */
-					var categoryRegex = '^' + $this.set.category + '$';
-					for(var category in categories) {
-
-						if($this.set.alsoMatchChildrenCategories) {
-							/* Match all children categories */
-							categoryRegex = '^' + $this.set.category;
-						}
-
-						/* Add matching categories products to list of products still available to filter */
-						var testCorrectCategory = new RegExp(categoryRegex);
-						if(testCorrectCategory.test(category)) {
-							tmpArr[i] = categories[category];
-							i++;
-						}
-
-					}
-				}
-
-				//These are all the relevant items for the rest of the filtering.
-				renderItems = Array.prototype.concat.apply([], tmpArr);
+				
 
 				$this.set.relevantFilters = {};
 
@@ -162,7 +189,6 @@
 
 						//Are there relevant items in this filter?
 						tmpArr = priv.intersect(renderItems, filterItem[subCat]);
-
 						if(tmpArr.length > 0) {
 							//Add them to "relevantFilters"
 							if($this.set.relevantFilters[cat] === undefined) $this.set.relevantFilters[cat] = {};
@@ -170,9 +196,6 @@
 						}
 					}
 				}
-
-				//Modify array keys to return item objs show only unique items.
-				renderItems = priv.unique(renderItems);
 
 				if($this.filter.related !== undefined) {
 					//These should only have the main items explicity in the category.
@@ -261,7 +284,7 @@
 							}
 							sortedFilters[cat][v] = relevantFilters[cat][v];
 						});
-				} else {
+				} else if(relevantFilters[cat] !== undefined) {
 					Object.keys(relevantFilters[cat])
 						.forEach(function(v, i) {
 							if(sortedFilters[cat] === undefined) {
@@ -507,7 +530,7 @@
 					$this.set.latestCat = cat;
 				} else {
 					//if selecting new filter element clear selected
-					if(!$(this).hasClass('selected')) {
+					if(!$(this).hasClass('selected') && !$(this).hasClass($this.set.disabledClass)) {
 						$(this).closest('.' + $this.set.groupClass).find('.filterControls-value').removeClass($this.set.selectedClass);
 					}
 				}
@@ -1862,26 +1885,24 @@
 			}
 
 			strHash = strHash.substring(0, strHash.length - 1);
-
-			if ($this.set.historyCategories && uri.length > 0) {
-				nextUri = uri;
-				uri = window.location.pathname.replace($this.set.category, '') + uri;
-				uri = uri.replace('//', '/');
-				$this.set.category = nextUri;
-			} else if ($this.set.historyCategories) {
-				nextUri = $this.set.category.indexOf('/') !== -1 ? $this.set.category.slice(0, $this.set.category.indexOf('/')) : $this.set.category;
-				uri = window.location.pathname.replace($this.set.category, '') + nextUri;
-				uri = uri.replace('//', '/');
-				$this.set.category = nextUri;
-			}
 			
 			if ($this.set.historyCategories) {
+				if (uri.length > 0) {
+					nextUri = uri;
+					uri = window.location.pathname.replace($this.set.category, '') + uri;
+				} else {
+					nextUri = $this.set.category.indexOf('/') !== -1 ? $this.set.category.slice(0, $this.set.category.indexOf('/')) : $this.set.category;
+					uri = window.location.pathname.replace($this.set.category, '') + nextUri;
+				}
+				uri = uri.replace('//', '/');
+				$this.set.category = nextUri;
+
 				if (strHash !== '') strHash = '#' + strHash;
 				history.pushState({}, '', uri + strHash);
 				if (currentHref !== window.location.href) {
 					priv.updateFilterObjFromHash({data: {this: $this, init: false}});
 				}
-			} else if(strHash.length > 0) {
+			} else {
 				window.location.hash = strHash;
 			}
 
