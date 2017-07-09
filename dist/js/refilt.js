@@ -596,7 +596,7 @@
 					$this.set.filteredBy.page += 1;
 					$this.set.currentHash = priv.writeLocation($this.set.filteredBy);
 					$this.find('.' + $this.set.pageCurrentClass).text($this.set.filteredBy.page);
-					priv.gatherItems.apply($this);
+					if (!$this.set.historyCategories) priv.gatherItems.apply($this);
 				}
 				return false;
 			});
@@ -611,7 +611,7 @@
 					$this.set.currentHash = priv.writeLocation($this.set.filteredBy);
 					$(window).scrollTop(currentScroll);
 					$this.find('.' + $this.set.pageCurrentClass).text($this.set.filteredBy.page);
-					priv.gatherItems.apply($this);
+					if (!$this.set.historyCategories) priv.gatherItems.apply($this);
 				}
 			});
 
@@ -696,7 +696,7 @@
 			$this.set.currentHash = window.location.hash;
 			//If previously filtered. Filter and render relevant products.
 			$this.set.filteredBy = priv.readLocation.apply($this);
-			var isFiltered = Object.keys($this.set.filteredBy).length > 1;
+			var isFiltered = Object.keys($this.set.filteredBy).length > 1 || $this.set.filteredBy.page > 1;
 
 			var initPreSort = init && $this.set.preSort !== false;
 			var initDebug = init && $this.set.debug === true;

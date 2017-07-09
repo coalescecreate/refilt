@@ -470,6 +470,9 @@ Category URI. Everything after the root and no slash is needed in the beginning.
 
 ## Changelog ##
 
+**Version 2.3.3** 
+Fixed pagination again. Fixed on page load to specific page.
+
 **Version 2.3.2** 
 Moved filterProducts to preFilter function to correctly set all values. Fixed double triggering of hash changes with historyCategories on. Added a check for sort field on filters with sortFiltersAlphabetically.
 
