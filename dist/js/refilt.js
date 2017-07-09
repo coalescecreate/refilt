@@ -66,7 +66,9 @@
 					$this.set.pages = Math.ceil($this.set.initItems.length / $this.set.limit);
 
 					priv.updateFilterObjFromHash({data: {this: $this, init: true}});
-					$(window).on('hashchange', {this: $this, init: false}, priv.updateFilterObjFromHash);
+					if (!$this.set.historyCategories) {
+						$(window).on('hashchange', {this: $this, init: false}, priv.updateFilterObjFromHash);
+					}
 				}
 			});
 
@@ -79,7 +81,6 @@
 			var variantArr = [];
 			var i = 0;
 			var j = 0;
-			var k = 0;
 			var categories = null;
 			var paramTypes = null;
 			var totalItems = null;
@@ -92,7 +93,7 @@
 			//Now we can sort the array without screwing original order.
 			$this.set.initItems = $.extend(true, [], $this.filter.products);
 
-			if($this.set.category !== undefined && $this.set.category !== '/' && !$this.set.historyCategories) {
+			if($this.set.category !== undefined && $this.set.category !== '/') {
 				//Returns:
 				//A refined category object for creating the filters.
 				//Relevant products to the current category
@@ -110,12 +111,23 @@
 				isSale = $this.set.category === $this.set.saleURI;
 				$this.set.isCampaignURL = (isNewArrivals || isSale);
 
+				if ($this.set.filterProducts !== false) {
+					products.forEach(function(item) { 
+						for (var i = 0; i < $this.set.filterProducts.length; i++) {
+							if (item[$this.set.filterProducts[i][0]] === $this.set.filterProducts[i][1]) {
+								tmpArr[j] = item.id;
+								j++;
+							}
+						}
+					});
+				}
+
 				if($this.set.isCampaignURL) {
 					for (i = 0; i < products.length; i++) {
 						if(isNewArrivals && products[i].price.newProduct) tmpArr[tmpArr.length] = products[i].id;
 						if(isSale && products[i].price.showAsOnSale) tmpArr[tmpArr.length] = products[i].id;
 					}
-				} else {
+				} else if(!$this.set.historyCategories) {
 					/* Only match current category */
 					var categoryRegex = '^' + $this.set.category + '$';
 					for(var category in categories) {
@@ -237,6 +249,8 @@
 				if($this.set.sortFiltersAlphabetically && cat !== 'categories' && relevantFilters[cat] !== undefined) {
 					Object.keys(relevantFilters[cat])
 						.sort(function(a,b) {
+							if($this.filter.filterDescriptions[cat][a].order !== undefined) a = $this.filter.filterDescriptions[cat][a].order;
+							if($this.filter.filterDescriptions[cat][b].order !== undefined) b = $this.filter.filterDescriptions[cat][b].order;
 							if(a < b || b === '') return -1;
 							if(a > b) return 1;
 							return 0;
@@ -1015,7 +1029,7 @@
 				return $filter;
 			};
 
-			if(filters === 0) {
+			if(filters === 0 || renderItems === undefined) {
 				//Same here if the intersect returns nothing.
 				//Clone filter items to return everything back to original state.
 				//Objects retain references like really really lots... 
@@ -1281,16 +1295,6 @@
 			//Only unique items
 			var $this = this;
 			var items = $this.set.currentItems;
-			if ($this.set.filterProducts !== false) {
-				items = items.filter(function(item) { 
-					for (var i = 0; i < $this.set.filterProducts.length; i++) {
-						if (item[$this.set.filterProducts[i][0]] === $this.set.filterProducts[i][1]) {
-							return item;
-						}
-						return false;
-					}
-				});
-			}
 			var len = items.length;
 			var range = null;
 			var start = 0;
@@ -1805,11 +1809,12 @@
 			var nextUri = '';
 			var value = null;
 			var hasCategories = false;
+			var currentHref = window.location.href;
 
 			for (var filter in obj) {
 				//Handling of arrays of values.
 				if(filter === 'page') {
-					if(obj[filter] > 1) strHash += filter + '=' + obj[filter] + '&';
+					if(obj[filter] > 1) strHash += 'page=' + obj[filter] + '&';
 				} else if (filter === 'categories' && $this.set.historyCategories) {
 					// Do we have a common category?
 					// Do we need also hash location to describe sor categories.
@@ -1863,7 +1868,7 @@
 				uri = window.location.pathname.replace($this.set.category, '') + uri;
 				uri = uri.replace('//', '/');
 				$this.set.category = nextUri;
-			} else {
+			} else if ($this.set.historyCategories) {
 				nextUri = $this.set.category.indexOf('/') !== -1 ? $this.set.category.slice(0, $this.set.category.indexOf('/')) : $this.set.category;
 				uri = window.location.pathname.replace($this.set.category, '') + nextUri;
 				uri = uri.replace('//', '/');
@@ -1871,8 +1876,11 @@
 			}
 			
 			if ($this.set.historyCategories) {
-				history.pushState({}, '', uri + '#' + strHash);
-				priv.updateFilterObjFromHash({data: {this: $this, init: false}});
+				if (strHash !== '') strHash = '#' + strHash;
+				history.pushState({}, '', uri + strHash);
+				if (currentHref !== window.location.href) {
+					priv.updateFilterObjFromHash({data: {this: $this, init: false}});
+				}
 			} else if(strHash.length > 0) {
 				window.location.hash = strHash;
 			}
