@@ -470,6 +470,9 @@ Category URI. Everything after the root and no slash is needed in the beginning.
 
 ## Changelog ##
 
+**Version 2.3.6** 
+When removing all location should be re-written with writeLocation function.
+
 **Version 2.3.5** 
 historyCategories should even be set on root category.
 

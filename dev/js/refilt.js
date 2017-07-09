@@ -595,7 +595,7 @@
 
 				if($this.set.outputChosenFiltersId !== false) $('#' + $this.set.outputChosenFiltersId).find('#js-refiltElements').remove();
 
-				window.location.hash = $this.set.currentHash;
+				$this.set.currentHash = priv.writeLocation($this.set.filteredBy);
 				$(window).scrollTop(currentScroll);
 
 				$this.find('.' + $this.set.groupClass).each(function() {
@@ -607,7 +607,7 @@
 
 				if($this.set.onFilterChanged !== undefined) $this.set.onFilterChanged($this.set.filteredBy);
 
-				priv.gatherItems.apply($this);
+				if (!$this.set.historyCategories) priv.gatherItems.apply($this);
 			});
 
 			//PAGING
