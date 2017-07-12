@@ -1060,7 +1060,7 @@
 				//JSON parse feels like only solution to really stop this completely...
 				$this.set.currentItems = JSON.parse($this.set.initItemsStr);
 
-				$this.find('.' + $this.set.groupClass).find('.' + $this.set.disabledClass + ', .' + $this.set.selectedClass).removeClass($this.set.disabledClass + ' ' + $this.set.selectedClass);
+				$this.find('.' + $this.set.groupClass).removeClass($this.set.disabledClass).find('.' + $this.set.disabledClass + ', .' + $this.set.selectedClass).removeClass($this.set.disabledClass + ' ' + $this.set.selectedClass);
 				$this.find('.' + $this.set.groupClass + ' option').removeAttr('disabled').filter(':selected').removeAttr('selected');
 
 				for (i = 0; i < paramTypes.length; i++) {

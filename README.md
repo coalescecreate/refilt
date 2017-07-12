@@ -470,6 +470,9 @@ Category URI. Everything after the root and no slash is needed in the beginning.
 
 ## Changelog ##
 
+**Version 2.3.7** 
+Fixed minor bug regarding not clearing disabled value on filter group.
+
 **Version 2.3.6** 
 When removing all location should be re-written with writeLocation function.
 
