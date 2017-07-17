@@ -470,6 +470,9 @@ Category URI. Everything after the root and no slash is needed in the beginning.
 
 ## Changelog ##
 
+**Version 2.3.8** 
+Updated to use the latest version of Rekaf 1+
+
 **Version 2.3.7** 
 Fixed minor bug regarding not clearing disabled value on filter group.
 

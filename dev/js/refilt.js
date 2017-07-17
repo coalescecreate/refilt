@@ -239,7 +239,7 @@
 				if(create === 'fakeSelect') {
 					if($this.set.repeatStartFakeSelect) html = priv.buildFilterTemplate.call($this, 'start_' + create, '', '', initDesc, tplAdditions) + html;
 					parentClassNames = tplAdditions.parentClassNames !== undefined ? ' ' + tplAdditions.parentClassNames.join(' ') : '';
-					html = '<div class="filterControls-value fake-select' + parentClassNames + '"><span class="title" data-orig-text="' + initDesc + '">' + initDesc + '</span><ul class="ul-clean fake-select-list">' + html + '</ul></div>';
+					html = '<div class="filterControls-value rekaf' + parentClassNames + '"><span class="rekaf-title">' + initDesc + '</span><ul class="ul-clean rekaf-list">' + html + '</ul></div>';
 				} else if(create === 'a') {
 
 				}
@@ -398,7 +398,7 @@
 				if(create === 'fakeSelect') {
 					if($this.set.repeatStartFakeSelect) subHtml = priv.buildFilterTemplate.call($this, 'start_' + create, '', underCat, catDesc, tplAdditions);
 					parentClassNames = tplAdditions.parentClassNames !== undefined ? ' ' + tplAdditions.parentClassNames.join(' ') : '';
-					html = '<div class="filterControls-value fake-select' + parentClassNames + '"><span class="title" data-orig-text="' + catDesc + '">' + catDesc + '</span><ul class="ul-clean fake-select-list">' + subHtml + html + '</ul></div>';
+					html = '<div class="filterControls-value rekaf' + parentClassNames + '"><span class="rekaf-title">' + catDesc + '</span><ul class="ul-clean rekaf-list">' + subHtml + html + '</ul></div>';
 				}
 				if(create === 'select' || create === 'multiSelect') html = '<select name="' + cat + '" class="filterControls-value"' + (create === 'multiSelect' ? ' multiple="multiple"' : '') + '><option value="0">' + catDesc + '</option>' + html + '</select>';
 				$filter.append(html);
