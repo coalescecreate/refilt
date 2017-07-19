@@ -470,6 +470,9 @@ Category URI. Everything after the root and no slash is needed in the beginning.
 
 ## Changelog ##
 
+**Version 2.3.9** 
+Fixed render only urls to use canonical version.
+
 **Version 2.3.8** 
 Updated to use the latest version of Rekaf 1+
 
