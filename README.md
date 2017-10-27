@@ -470,6 +470,9 @@ Category URI. Everything after the root and no slash is needed in the beginning.
 
 ## Changelog ##
 
+**Version 3.0.1** 
+Filter was filtering with s1 rather than being as a configurator. Configurator with s1 makes more sense with less clicks for the user.
+
 **Version 3.0.0** 
 Overhaul of the way that the filter works with history categories. Category filters should now be setup as categories_depth1_depth2 etc.
 

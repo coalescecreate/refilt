@@ -541,8 +541,8 @@
 				var cat = $(this).closest('.' + $this.set.groupClass).attr('id');
 				var val = $(this).data('value');
 
-				//if sor select as latestCat
-				if(type !== 's' && type !== 's1') {
+				//if not sort select as latestCat
+				if(type !== 's') {
 					$this.set.latestCat = cat;
 				} else {
 					//if selecting new filter element clear selected
@@ -1125,7 +1125,7 @@
 					type = $filter.data('type') || null;
 					catId = paramTypes[i][0].replace(/_\d$/, '');
 
-					if((type === 's1' && $this.set.latestCat === catId) || (type === 'sor' && filters === 1 && $this.set.latestCat === catId)) {
+					if($this.set.latestCat === catId && filters === 1) {
 						if($this.set.resetLatestCat) {
 							$('#' + paramTypes[i][0]).find('.' + $this.set.disabledClass).removeClass($this.set.disabledClass);
 							$('#' + paramTypes[i][0]).find('option').removeAttr('disabled');
@@ -1169,7 +1169,7 @@
 					//But based on all the other filters not the one that is currently selected are there other categories that can be still added?
 
 					//Choice has been filtered with but is not the latest chosen filter.
-					if($this.set.filteredBy[paramTypes[i][0]] !== undefined && type === 'sor') {
+					if($this.set.filteredBy[paramTypes[i][0]] !== undefined) {
 						//Re-gather items excluding currently filtered category.
 						tempFilterObj = $.extend(true, {}, $this.set.filteredBy);
 						delete tempFilterObj[paramTypes[i][0]];
@@ -1898,22 +1898,7 @@
 						// Only one category use only uri not hash.
 						uri = categories[0];
 					} else {
-						var categoryPeices = categories.map(function(val) { return val.split('/'); });
-						var depth1 = categoryPeices[0][0];
-						var depth2 = categoryPeices[0][1];
-						categoryPeices.forEach(function(category) {
-							if (category[0] !== depth1) depth1 = false;
-							if (category[1] !== depth2) depth2 = false;
-						});
-						if (depth1 !== false && uri === '') {
-							uri = depth1;
-							if (depth2 !== false) {
-								uri += '/' + depth2;
-							}
-							strHash += filter + '~' + obj[filter].type + '=' + categories.map(function(val) { return val.replace(uri + '/', ''); }).join(',') + '&';
-						} else {
-							strHash += filter + '~' + obj[filter].type + '=' + categories.join(',') + '&';
-						}
+						strHash += filter + '~' + obj[filter].type + '=' + categories.join(',') + '&';
 					}
 				} else {
 					switch (obj[filter].type) {
