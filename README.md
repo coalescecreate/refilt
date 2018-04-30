@@ -470,6 +470,9 @@ Category URI. Everything after the root and no slash is needed in the beginning.
 
 ## Changelog ##
 
+**Version 3.0.2** 
+Fixed too many products are included in history categories that aren't in the defined category.
+
 **Version 3.0.1** 
 Filter was filtering with s1 rather than being as a configurator. Configurator with s1 makes more sense with less clicks for the user.
 

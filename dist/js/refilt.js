@@ -157,17 +157,16 @@
 											if ($this.filter.filter[matchesFilter] === undefined) $this.filter.filter[matchesFilter] = {};
 											if ($this.set.filterCategories[matchesFilter] === undefined) $this.set.filterCategories[matchesFilter] = [];
 											$this.filter.filter[matchesFilter][underCat] = categories[underCat];
+											tmpArr = Array.prototype.concat.apply(tmpArr, categories[underCat]);
 											$this.set.filterCategories[matchesFilter].push(underCat);
 										}
+									} else if (matchesFilter !== false) {
+										tmpArr = Array.prototype.concat.apply(tmpArr, categories[underCat]);
 									}
 								});
 							});
 
 							delete $this.filter.filter.categories;
-
-							products.forEach(function(item, i) {
-								tmpArr[i] = item.id;
-							});
 						}
 					}
 
