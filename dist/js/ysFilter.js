@@ -473,9 +473,18 @@
 				if(filter === 'sort') filterVal = filteredBy[filter].value.join('-');
 
 				if(typeof filteredBy[filter].value === 'object' && filter !== 'sort') {
+					if(type === 'select' || type === 'multiSelect') {
+						$filter.find('option').removeAttr('selected');
+					} else if(type === 'fakeSelect') {
+						$filter.find('li.' + $this.set.selectedClass).removeClass($this.set.selectedClass);
+					} else {
+						$filter.find('.' + $this.set.selectedClass).removeClass($this.set.selectedClass);
+					}
 					for(var i = 0; i < filteredBy[filter].value.length; i++) {
 						if(type === 'select' || type === 'multiSelect') {
 							$filter.find('#' + filter + '-' + filteredBy[filter].value[i]).attr('selected', true);
+						} else if(type === 'fakeSelect') {
+							$filter.find('#' + filter + '-' + filteredBy[filter].value[i]).closest('li').addClass($this.set.filterSelectedClass);
 						} else {
 							$filter.find('#' + filter + '-' + filteredBy[filter].value[i]).addClass($this.set.filterSelectedClass);
 						}

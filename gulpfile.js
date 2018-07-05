@@ -92,7 +92,7 @@ gulp.task('publish', function() {
 
 gulp.task('browser-sync', function() {
     browserSync.init(null, {
-        proxy: vars.pluginName+".dev"
+        proxy: "refilt.test"
     });
 });
 

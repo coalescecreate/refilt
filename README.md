@@ -280,6 +280,12 @@ Numerous classes can be reassigned. Check the `defaultOpts {}` as to which class
 
 ### Changelog ###
 
+**Version 0.2.16**
+Fixed selected class on fake select filters.
+
+**Version 0.2.15**
+Added pre-api branch to NPM.
+
 **Version 0.2.14**
 Added events and pagination for specific page links.
 
