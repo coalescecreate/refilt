@@ -435,6 +435,9 @@ Category URI. Everything after the root and no slash is needed in the beginning.
 
 ## Changelog ##
 
+**Version 1.11.3** 
+Updated distribution
+
 **Version 1.11.2** 
 Added `decodeURIComponent` to hash parser to read spaces correctly.
 
