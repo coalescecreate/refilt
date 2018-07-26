@@ -1673,22 +1673,23 @@
 			if(str.length > 1 && str.indexOf('/') !== 1) {
 				for (var i = 0; i < filters.length; i++) {
 					tmpArr = filters[i].split('=');
+					var combinedValue = decodeURIComponent(tmpArr[1]);
 					if(tmpArr[0] === 'page') {
 						obj.page = parseInt(tmpArr[1]);
 					} else {
 						type = tmpArr[0].split('~');
 						switch (type[1]) {
 							case 'sand':
-								value = tmpArr[1].split('+');
+								value = combinedValue.split('+');
 								break;
 							case 'sor':
 							case 'r':
 							case 's':
 							case 'f':
-								value = tmpArr[1].split(',');
+								value = combinedValue.split(',');
 								break;
 							default:
-								value = tmpArr[1];
+								value = combinedValue;
 								break;
 						}
 						if(type[0] !== 'sort') $this.set.latestCat = type[0];
