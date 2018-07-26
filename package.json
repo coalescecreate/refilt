@@ -1,12 +1,18 @@
 {
-  "name": "ys-filter",
-  "version": "1.11.1",
+  "name": "refilt",
+  "version": "1.11.2",
   "description": "For filtering and sorting products returned from Silk API.",
-  "main": "dev/index.html",
-  "homepage": "http://youngskilled.com",
-  "author": "richard@youngskilled.com Young/Skilled",
+  "main": "dist/js/refilt.min.js",
+  "homepage": "http://coalescecreate.com",
+  "author": "richard@coalescecreate.com Coalesce Create",
   "license": "MIT",
-  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:coalescecreate/refilt.git"
+  },
+  "dependencies": {
+    "jquery": ">=1.8"
+  },
   "devDependencies": {
     "browser-sync": "^2.8.0",
     "gulp": "^3.8.10",
