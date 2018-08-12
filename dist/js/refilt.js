@@ -200,7 +200,10 @@
 
 					products.forEach(function(item) { 
 						for (var i = 0; i < $this.set.filterProducts.length; i++) {
-							if (item[$this.set.filterProducts[i][0]] === $this.set.filterProducts[i][1]) {
+							if ($this.set.filterProducts[i][1] && item[$this.set.filterProducts[i][0]] === $this.set.filterProducts[i][1]) {
+								tmpArr[j] = item.id;
+								j++;
+							} else if (!$this.set.filterProducts[i][1] && item[$this.set.filterProducts[i][0]] === undefined) {
 								tmpArr[j] = item.id;
 								j++;
 							}

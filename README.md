@@ -470,6 +470,9 @@ Category URI. Everything after the root and no slash is needed in the beginning.
 
 ## Changelog ##
 
+**Version 3.0.3** 
+Added exclusion to `filterProducts`. Now possible to exclude products based on attributes.
+
 **Version 3.0.2** 
 Fixed too many products are included in history categories that aren't in the defined category.
 
