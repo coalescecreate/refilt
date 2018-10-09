@@ -243,7 +243,7 @@
 							}
 							sortedFilters[cat][v] = relevantFilters[cat][v];
 						});
-				} else {
+				} else if(relevantFilters[cat] !== undefined) {
 					Object.keys(relevantFilters[cat])
 						.forEach(function(v, i) {
 							if(sortedFilters[cat] === undefined) {
