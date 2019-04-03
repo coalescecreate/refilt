@@ -1,6 +1,6 @@
 {
   "name": "refilt",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "description": "For filtering and sorting products based on a JSON object.",
   "main": "dist/refilt.js",
   "authors": [

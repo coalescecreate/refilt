@@ -512,6 +512,9 @@ Category URI. Everything after the root and no slash is needed in the beginning.
 
 ## Changelog ##
 
+**Version 3.1.1** 
+Fixed accidental regression. Reimplemented `3.0.3` & `3.0.2` into `3.1.0`.
+
 **Version 3.1.0** 
 Added new methods to facilitate a product customizer `preFilter` `updateLocation` and `allowNullS1`. Added `data-value` to spans in swatch HTML for easier presentation of fakeSelects. Swatch class is even added to filter swatch html.
 

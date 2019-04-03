@@ -157,17 +157,16 @@
 											if ($this.filter.filter[matchesFilter] === undefined) $this.filter.filter[matchesFilter] = {};
 											if ($this.set.filterCategories[matchesFilter] === undefined) $this.set.filterCategories[matchesFilter] = [];
 											$this.filter.filter[matchesFilter][underCat] = categories[underCat];
+											tmpArr = Array.prototype.concat.apply(tmpArr, categories[underCat]);
 											$this.set.filterCategories[matchesFilter].push(underCat);
 										}
+									} else if (matchesFilter !== false) {
+										tmpArr = Array.prototype.concat.apply(tmpArr, categories[underCat]);
 									}
 								});
 							});
 
 							delete $this.filter.filter.categories;
-
-							products.forEach(function(item, i) {
-								tmpArr[i] = item.id;
-							});
 						}
 					}
 
@@ -201,7 +200,10 @@
 
 					products.forEach(function(item) { 
 						for (var i = 0; i < $this.set.filterProducts.length; i++) {
-							if (item[$this.set.filterProducts[i][0]] === $this.set.filterProducts[i][1]) {
+							if ($this.set.filterProducts[i][1] && item[$this.set.filterProducts[i][0]] === $this.set.filterProducts[i][1]) {
+								tmpArr[j] = item.id;
+								j++;
+							} else if (!$this.set.filterProducts[i][1] && item[$this.set.filterProducts[i][0]] === undefined) {
 								tmpArr[j] = item.id;
 								j++;
 							}
@@ -738,7 +740,7 @@
 			$this.set.currentHash = window.location.hash;
 			//If previously filtered. Filter and render relevant products.
 			if ($this.set.preFilter && init) {
-				$this.set.filteredBy = $this.set.preFilter
+				$this.set.filteredBy = $this.set.preFilter;
 			} else if(!$this.set.preFilter) {
 				$this.set.filteredBy = priv.readLocation.apply($this);
 			}
