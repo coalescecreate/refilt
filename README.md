@@ -198,6 +198,46 @@ The value is an array of arrays i.e. `[[productKey, valueToMatch], ...]` `valueT
 	$(selector).refilt({historyCategories: true})
 
 
+#### preFilter ####
+
+*Default* `false`  
+*Expects* `false or object`   
+*Since* `3.1.0`
+
+Object is to be the same as `filteredBy` object. Set debug to see shape. Prefilter enables the filter to be set to specific values when it's not possible/inconvinient to get the values from the hash. Often used in combintaion with `updateLocation`.
+
+	$(selector).refilt({
+		preFilter: {
+			value: 'black',
+			type: 's1'
+		}
+	});
+
+
+#### updateLocation ####
+
+*Default* `true`  
+*Expects* `boolean`   
+*Since* `3.1.0`
+
+Stop filter from writing to the URL bar either with pushState or via hashChange.
+
+	$(selector).refilt({ updateLocation: true });
+
+
+#### allowNullS1 ####
+
+*Default* `true`  
+*Expects* `boolean`   
+*Since* `3.1.0`
+
+Normally if a filter is clicked after already being selected it would unselect the value. This prevents a null value for a given filter if that filter is pre-selected.
+
+	$(selector).refilt({ allowNullS1: true });
+
+
+### Callbacks ###
+
 #### onItem ####
 
 *Expects* `function(length)`
@@ -303,6 +343,8 @@ Callback to update filter styles manually after changes. Filter object sent as a
 		//Do something after filtering is finished.
 		for(var filter in filterObj) { ... }
 	}})
+
+### String Mapping ###
 
 #### classProductNew, classProductSale ####
 
@@ -469,6 +511,9 @@ Category URI. Everything after the root and no slash is needed in the beginning.
 
 
 ## Changelog ##
+
+**Version 3.1.0** 
+Added new methods to facilitate a product customizer `preFilter` `updateLocation` and `allowNullS1`. Added `data-value` to spans in swatch HTML for easier presentation of fakeSelects. Swatch class is even added to filter swatch html.
 
 **Version 3.0.3** 
 Added exclusion to `filterProducts`. Now possible to exclude products based on attributes.

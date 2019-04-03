@@ -66,7 +66,7 @@
 					$this.set.pages = Math.ceil($this.set.initItems.length / $this.set.limit);
 
 					priv.updateFilterObjFromHash({data: {this: $this, init: true}});
-					if (!$this.set.historyCategories) {
+					if (!$this.set.historyCategories && $this.set.updateLocation) {
 						$(window).on('hashchange', {this: $this, init: false}, priv.updateFilterObjFromHash);
 					}
 				}
@@ -157,16 +157,17 @@
 											if ($this.filter.filter[matchesFilter] === undefined) $this.filter.filter[matchesFilter] = {};
 											if ($this.set.filterCategories[matchesFilter] === undefined) $this.set.filterCategories[matchesFilter] = [];
 											$this.filter.filter[matchesFilter][underCat] = categories[underCat];
-											tmpArr = Array.prototype.concat.apply(tmpArr, categories[underCat]);
 											$this.set.filterCategories[matchesFilter].push(underCat);
 										}
-									} else if (matchesFilter !== false) {
-										tmpArr = Array.prototype.concat.apply(tmpArr, categories[underCat]);
 									}
 								});
 							});
 
 							delete $this.filter.filter.categories;
+
+							products.forEach(function(item, i) {
+								tmpArr[i] = item.id;
+							});
 						}
 					}
 
@@ -200,10 +201,7 @@
 
 					products.forEach(function(item) { 
 						for (var i = 0; i < $this.set.filterProducts.length; i++) {
-							if ($this.set.filterProducts[i][1] && item[$this.set.filterProducts[i][0]] === $this.set.filterProducts[i][1]) {
-								tmpArr[j] = item.id;
-								j++;
-							} else if (!$this.set.filterProducts[i][1] && item[$this.set.filterProducts[i][0]] === undefined) {
+							if (item[$this.set.filterProducts[i][0]] === $this.set.filterProducts[i][1]) {
 								tmpArr[j] = item.id;
 								j++;
 							}
@@ -473,7 +471,7 @@
 
 			//Title is used if text isn't
 			backgroundTitle = background ? ' title="' + valObj.desc + '"' : '';
-			innerHtml = background ? priv.hexOrImage(desc, 'style', $this.set.forceHex) : valObj.desc;
+			innerHtml = background ? priv.hexOrImage(desc, 'style', $this.set.forceHex, $this.set.swatchClass) : valObj.desc;
 
 			id = id.replace(/\W/g, '-');
 
@@ -556,7 +554,11 @@
 				//If not disabled let filtering continue.
 				if(!$(this).hasClass($this.set.disabledClass) && !$(this).parent().hasClass($this.set.disabledClass)) {
 					//Add or remove select on element.
-					$(this).toggleClass($this.set.selectedClass);
+					if ($this.set.allowNullS1) {
+						$(this).toggleClass($this.set.selectedClass);
+					} else {
+						$(this).addClass($this.set.selectedClass);
+					}
 					priv.updateFilterObj.apply($this, [type, cat, val]);
 				}
 			});
@@ -611,7 +613,7 @@
 
 				if($this.set.outputChosenFiltersId !== false) $('#' + $this.set.outputChosenFiltersId).find('#js-refiltElements').remove();
 
-				$this.set.currentHash = priv.writeLocation($this.set.filteredBy);
+				if($this.set.updateLocation) $this.set.currentHash = priv.writeLocation($this.set.filteredBy);
 				$(window).scrollTop(currentScroll);
 
 				$this.find('.' + $this.set.groupClass).each(function() {
@@ -634,7 +636,7 @@
 				//Next Page
 				if($this.set.filteredBy.page < $this.set.pages) {
 					$this.set.filteredBy.page += 1;
-					$this.set.currentHash = priv.writeLocation($this.set.filteredBy);
+					if($this.set.updateLocation) $this.set.currentHash = priv.writeLocation($this.set.filteredBy);
 					$this.find('.' + $this.set.pageCurrentClass).text($this.set.filteredBy.page);
 					if (!$this.set.historyCategories) priv.gatherItems.apply($this);
 				}
@@ -648,7 +650,7 @@
 				//Prev Page
 				if($this.set.filteredBy.page > 1) {
 					$this.set.filteredBy.page -= 1;
-					$this.set.currentHash = priv.writeLocation($this.set.filteredBy);
+					if($this.set.updateLocation) $this.set.currentHash = priv.writeLocation($this.set.filteredBy);
 					$(window).scrollTop(currentScroll);
 					$this.find('.' + $this.set.pageCurrentClass).text($this.set.filteredBy.page);
 					if (!$this.set.historyCategories) priv.gatherItems.apply($this);
@@ -735,7 +737,11 @@
 			init = e.data.init;
 			$this.set.currentHash = window.location.hash;
 			//If previously filtered. Filter and render relevant products.
-			$this.set.filteredBy = priv.readLocation.apply($this);
+			if ($this.set.preFilter && init) {
+				$this.set.filteredBy = $this.set.preFilter
+			} else if(!$this.set.preFilter) {
+				$this.set.filteredBy = priv.readLocation.apply($this);
+			}
 			var isFiltered = Object.keys($this.set.filteredBy).length > 1 || $this.set.filteredBy.page > 1;
 
 			var initPreSort = init && $this.set.preSort !== false;
@@ -782,7 +788,7 @@
 
 			if(type === 's1' || type === 's') {
 				currVal = $this.set.filteredBy[cat] !== undefined ? (typeof $this.set.filteredBy[cat].value === 'object') ? $this.set.filteredBy[cat].value.join(',') : $this.set.filteredBy[cat].value : '';
-				if(currVal === val || val === 'remove') {
+				if((currVal === val && $this.set.allowNullS1) || val === 'remove') {
 					delete $this.set.filteredBy[cat];
 					priv.reSelectLatestFilter.apply($this);
 				} else {
@@ -835,10 +841,14 @@
 			
 			//Update Hash - writeLocation object
 			currentScroll = $(window).scrollTop();
-			$this.set.currentHash = priv.writeLocation($this.set.filteredBy);
-			if($this.set.currentHash === '') $(window).scrollTop(currentScroll);
+			if($this.set.updateLocation) {
+				$this.set.currentHash = priv.writeLocation($this.set.filteredBy);
+			} else {
+				priv.updateFilterObjFromHash({data: {this: $this, init: false}});
+			}
+			if(Object.keys($this.set.filteredBy).length === 1) $(window).scrollTop(currentScroll);
 
-			if($this.set.updateWHash !== false) {
+			if($this.set.updateLocation && $this.set.updateWHash !== false) {
 				$('.' + $this.set.updateWHash).each(function() {
 					var href = $(this).attr('href');
 					$(this).attr('href', href + '#' + $this.set.currentHash);
@@ -1671,13 +1681,13 @@
 
 			if(obj.image !== undefined && obj.image.url !== undefined && !forceHex) {
 				if(type === 'style') {
-					str = '<span class="' + swatchClass + '" style="background-image: url(' + obj.image.url + ');"></span>';
+					str = '<span data-value="' + obj.desc + '" class="' + swatchClass + '" style="background-image: url(' + obj.image.url + ');"></span>';
 				} else {
 					str = obj.image.url;
 				}
 			} else if(obj.hex !== undefined) {
 				obj.hex.replace(/#?([a-f,0-9]{3,6})/ig, function(value, text) {
-					str += '<span class="' + swatchClass + '" style="background-color: #' + text + ';"></span>';
+					str += '<span data-value="' + obj.desc + '" class="' + swatchClass + '" style="background-color: #' + text + ';"></span>';
 				});
 			}
 
@@ -2010,6 +2020,7 @@
 	var defaultOpts = {
 		limit: 20,
 		preSort: false,
+		preFilter: false,
 		splitSizes: false,
 		appendItems: false,
 		multipleImgs: false,
@@ -2028,6 +2039,8 @@
 		sortFiltersAlphabetically: false,
 		historyCategories: false,
 		filterProducts: false,
+		updateLocation: true,
+		allowNullS1: true,
 		newsURI: 'new-arrivals',
 		saleURI: 'sale',
 		undefinedCat: 'Unsorted',
