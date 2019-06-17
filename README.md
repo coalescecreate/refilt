@@ -512,6 +512,9 @@ Category URI. Everything after the root and no slash is needed in the beginning.
 
 ## Changelog ##
 
+**Version 3.1.2** 
+Made render products compatibile with external paging.
+
 **Version 3.1.1** 
 Fixed accidental regression. Reimplemented `3.0.3` & `3.0.2` into `3.1.0`.
 

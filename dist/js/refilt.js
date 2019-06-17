@@ -1360,7 +1360,9 @@
 			var customRenderObj = [];
 
 			//Handle paging
-			if($this.set.initialLoad) {
+			if ($this.set.renderOnly) {
+				// Handle pages externally.
+			} else if($this.set.initialLoad) {
 
 				//start at 0 if append products start at page - 1 in not.
 				start = $this.set.appendItems ? 0 : ($this.set.limit * ($this.set.filteredBy.page - 1));
@@ -2006,13 +2008,15 @@
 
 			return this.each(function() {
 				var $this = $(this);
-				var objectData = $this.data();
 				var uniqueItems = priv.unique(productsToRender.slice(0));
 
-				$this.set = $.extend({}, init, objectData, privateOpts);
+				$this.set = $.extend({}, privateOpts, init);
 				$this.filter = $.extend(true, {}, filter);
 				$this.set.currentItems = priv.keysToItems.apply($this, [uniqueItems]);
 				$this.set.renderOnly = true;
+				if ($this.filter.settings.limit > 0) $this.set.limit = $this.filter.settings.limit;
+
+				if($this.set.debug === true) console.log('DEBUG: LOAD $this.set.appendItems, $this.set.pages, $this.set.filteredBy.page, $this.set.initialLoad', $this.set.appendItems, $this.set.pages, $this.set.filteredBy.page, $this.set.initialLoad);
 
 				priv.renderItems.apply($this);
 			});
