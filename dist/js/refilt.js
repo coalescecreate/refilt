@@ -311,9 +311,7 @@
 						.sort(function(a,b) {
 							if($this.filter.filterDescriptions[cat][a].order !== undefined) a = $this.filter.filterDescriptions[cat][a].order;
 							if($this.filter.filterDescriptions[cat][b].order !== undefined) b = $this.filter.filterDescriptions[cat][b].order;
-							if(a < b || b === '') return -1;
-							if(a > b) return 1;
-							return 0;
+							return a > b ? 1 : -1;
 						})
 						.forEach(function(v, i) {
 							if(sortedFilters[cat] === undefined) {

@@ -512,6 +512,9 @@ Category URI. Everything after the root and no slash is needed in the beginning.
 
 ## Changelog ##
 
+**Version 3.1.3** 
+Simplified sorting of filters.
+
 **Version 3.1.2** 
 Made render products compatibile with external paging.
 
