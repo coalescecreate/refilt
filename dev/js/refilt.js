@@ -745,7 +745,7 @@
 			var isFiltered = Object.keys($this.set.filteredBy).length > 1 || $this.set.filteredBy.page > 1;
 
 			var initPreSort = init && $this.set.preSort !== false;
-			var initDebug = init && $this.set.debug === true;
+			var initDebug = (init && $this.set.debug) || (init && $this.set.customRender !== undefined) === true;
 			var initHash = init && $this.set.currentHash !== '';
 
 			if(isFiltered) {
@@ -767,7 +767,7 @@
 				//Only replace objects in certain circumstances otherwise don't update page.
 				if($this.set.preSort !== false) {
 					priv.gatherItems.apply($this);
-				} else if($this.set.debug === true) {
+				} else if($this.set.debug === true || $this.set.customRender !== undefined) {
 					//Replace even on first load if debug: true
 					priv.gatherItems.apply($this);
 				}
@@ -1441,14 +1441,14 @@
 			if($this.set.appendItems && $this.set.pages !== 1 && $this.set.filteredBy.page !== 1 && $this.set.initialLoad === false) {
 				if($this.set.beforeItemsRendered !== undefined) $this.set.beforeItemsRendered('append');
 				if($this.set.customRender !== undefined) {
-					$this.set.customRender('append', $this.filter, customRenderObj);
+					$this.set.customRender('append', $this.filter, customRenderObj, $this.set.filteredBy);
 				} else {
 					$this.find('#' + $this.set.itemContId).append(html);
 				}
 			} else {
 				if($this.set.beforeItemsRendered !== undefined) $this.set.beforeItemsRendered('replace');
 				if($this.set.customRender !== undefined) {
-					$this.set.customRender('replace', $this.filter, customRenderObj);
+					$this.set.customRender('replace', $this.filter, customRenderObj, $this.set.filteredBy);
 				} else {
 					$this.find('#' + $this.set.itemContId).html(html);
 				}
