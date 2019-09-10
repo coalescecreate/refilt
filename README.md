@@ -512,6 +512,9 @@ Category URI. Everything after the root and no slash is needed in the beginning.
 
 ## Changelog ##
 
+**Version 3.1.5** 
+Minor change to `filterProducts` converted both values to integers to ensure exact match.
+
 **Version 3.1.4** 
 When splitting using customRender send through first render to intiate render functions.
 
