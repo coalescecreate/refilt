@@ -45,6 +45,9 @@
 			//This should test if there is a locally stored JSON that is relevant (relevant == correct MD5 hash)
 			$.ajax({
 				url: $this.set.url,
+				data: {
+					category: $this.data('category')
+				},
 				type: 'GET',
 				cache: true,
 				dataType: 'JSON',
@@ -304,7 +307,9 @@
 				
 				html = '';
 				create = $filter.data('create');
-				tplAdditions = $this.set.filterOptions[catId] || {};
+				tplAdditions = $this.set.filterOptions[catId] || catId.indexOf('categories_') !== -1 ? $this.set.filterOptions.categories_ : {};
+
+				if (tplAdditions.ssr) continue;
 
 				if($this.set.sortFiltersAlphabetically && cat.indexOf('categories') !== 0 && relevantFilters[cat] !== undefined) {
 					Object.keys(relevantFilters[cat])
@@ -1940,7 +1945,7 @@
 					nextUri = uri;
 					uri = window.location.pathname.replace($this.set.category, '') + uri;
 				} else {
-					nextUri = $this.set.category.indexOf('/') !== -1 ? $this.set.category.slice(0, $this.set.category.indexOf('/')) : $this.set.category;
+					nextUri = $this.data('category');
 					uri = window.location.pathname.replace($this.set.category, '') + nextUri;
 				}
 				uri = uri.replace('//', '/');

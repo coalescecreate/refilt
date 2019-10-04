@@ -117,6 +117,7 @@ Update other elements on the page by appending hash to those URL's like e.g. pro
 Extend filter HTML with predefined variables. See Filter Variables below.
 
 	$(selector).refilt({filterOptions: {
+		ssr: false,
 		color: {
 			background: true
 		}
@@ -511,6 +512,9 @@ Category URI. Everything after the root and no slash is needed in the beginning.
 
 
 ## Changelog ##
+
+**Version 3.2.0** 
+Added trigger for skipping building filter values if built on server. Changed history categories to stop going higher up in the heirarchy than entered category. Added possiblity to add in dynamic categories for `historyCategories`
 
 **Version 3.1.5** 
 Minor change to `filterProducts` converted both values to integers to ensure exact match.
