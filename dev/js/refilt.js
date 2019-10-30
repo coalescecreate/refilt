@@ -304,6 +304,7 @@
 				var filterId = '';
 				var categoriesId = [];
 				var uniqueCategories = {};
+				var sortFilter = $this.set.sortFiltersAlphabetically === true || (Array.isArray($this.set.sortFiltersAlphabetically) && $this.set.sortFiltersAlphabetically.indexOf(cat) !== -1);
 				
 				html = '';
 				create = $filter.data('create');
@@ -311,7 +312,7 @@
 
 				if (tplAdditions.ssr) continue;
 
-				if($this.set.sortFiltersAlphabetically && cat.indexOf('categories') !== 0 && relevantFilters[cat] !== undefined) {
+				if(sortFilter && cat.indexOf('categories') !== 0 && relevantFilters[cat] !== undefined) {
 					Object.keys(relevantFilters[cat])
 						.sort(function(a,b) {
 							if($this.filter.filterDescriptions[cat][a].order !== undefined) a = $this.filter.filterDescriptions[cat][a].order;

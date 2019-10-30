@@ -160,9 +160,9 @@ Make the renderer use hex when rendering products and filter. Used in conjunctio
 #### sortFiltersAlphabetically ####
 
 *Default* `false`  
-*Expects* `boolean`
+*Expects* `boolean, array`
 
-Sort filters/dropdowns menu to be shown in alphabetical order.
+Sort filters/dropdowns menu to be shown in alphabetical order. When using array include those filters that should be set alphabetically.
 
 	$(selector).refilt({sortFiltersAlphabetically: false})
 
@@ -512,6 +512,9 @@ Category URI. Everything after the root and no slash is needed in the beginning.
 
 
 ## Changelog ##
+
+**Version 3.2.1** 
+Made `sortFiltersAlphabetically` take an array of filters to be sorted. Enables one to specify which filters to tidy up.
 
 **Version 3.2.0** 
 Added trigger for skipping building filter values if built on server. Changed history categories to stop going higher up in the heirarchy than entered category. Added possiblity to add in dynamic categories for `historyCategories`
