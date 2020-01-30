@@ -1409,6 +1409,8 @@
 					} else {
 						$this.find('.' + $this.set.paging.nextBtnClass).removeClass($this.set.disabledClass);
 					}
+
+					$this.find('.' + $this.set.paging.contClass).removeClass($this.set.disabledClass);
 				} else {
 					//Pages not needed too few items compared to limit.
 					$this.set.pages = 1;

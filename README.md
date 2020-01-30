@@ -513,6 +513,9 @@ Category URI. Everything after the root and no slash is needed in the beginning.
 
 ## Changelog ##
 
+**Version 3.2.2** 
+Fixed next button not showing when going from one page to multiple pages.
+
 **Version 3.2.1** 
 Made `sortFiltersAlphabetically` take an array of filters to be sorted. Enables one to specify which filters to tidy up.
 
