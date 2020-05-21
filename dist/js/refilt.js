@@ -623,7 +623,7 @@
 				$this.find('.' + $this.set.groupClass + ' .' + $this.set.selectedClass).removeClass($this.set.selectedClass);
 				$this.find('.' + $this.set.groupClass + ' option').removeAttr('disabled').filter(':selected').removeAttr('selected');
 
-				if($this.set.onFilterChanged !== undefined) $this.set.onFilterChanged($this.set.filteredBy);
+				if($this.set.onFilterChanged !== undefined) $this.set.onFilterChanged($this.set.filteredBy, $this);
 
 				if (!$this.set.historyCategories) priv.gatherItems.apply($this);
 			});
@@ -775,7 +775,7 @@
 				priv.gatherItems.apply($this);
 			}
 			//Filter items have changed do callback. 
-			if($this.set.onFilterChanged !== undefined) $this.set.onFilterChanged($this.set.filteredBy);
+			if($this.set.onFilterChanged !== undefined) $this.set.onFilterChanged($this.set.filteredBy, $this);
 		},
 		updateFilterObj: function(type, cat, val) {
 			//Must update
@@ -951,7 +951,7 @@
 			}
 
 			//Filter items have changed do callback. 
-			if($this.set.onFilterChanged !== undefined) $this.set.onFilterChanged($this.set.filteredBy);
+			if($this.set.onFilterChanged !== undefined) $this.set.onFilterChanged($this.set.filteredBy, $this);
 
 		},
 		gatherItems: function(shouldReturn, filteredBy) {

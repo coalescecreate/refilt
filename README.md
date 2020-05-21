@@ -334,12 +334,12 @@ Using several images on product listing for roll overs etc.
 
 #### onFilterChanged ####
 
-*Expects* `function(filterObj)`
+*Expects* `function(filterObj, $this)`
 *Updated* `1.3.2`
 
-Callback to update filter styles manually after changes. Filter object sent as a variable.
+Callback to update filter styles manually after changes. Filter object sent as a variable and $this with all settings.
 
-	$(selector).refilt({onFilterChanged: function(filterObj) {
+	$(selector).refilt({onFilterChanged: function(filterObj, $this) {
 		//Do something after filtering is finished.
 		for(var filter in filterObj) { ... }
 	}})
@@ -511,6 +511,9 @@ Category URI. Everything after the root and no slash is needed in the beginning.
 
 
 ## Changelog ##
+
+**Version 3.1.6** 
+Added new variable to `onFilterChanged` for further customizations.
 
 **Version 3.1.5** 
 Minor change to `filterProducts` converted both values to integers to ensure exact match.
