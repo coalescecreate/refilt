@@ -1356,7 +1356,7 @@
 			//Filter out correct products to be shown
 			//Only unique items
 			var $this = this;
-			var items = $this.set.currentItems;
+			var items = $this.set.currentItems.filter(function(i) { return i.id; });
 			var len = items.length;
 			var range = null;
 			var start = 0;
