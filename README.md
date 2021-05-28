@@ -513,6 +513,9 @@ Category URI. Everything after the root and no slash is needed in the beginning.
 
 ## Changelog ##
 
+**Version 3.2.5** 
+Fixed bug on sort by price if price is missing (sold out products missing from object).
+
 **Version 3.2.4** 
 Filter out items that don't have any data due to being filtered out in product cache.
 

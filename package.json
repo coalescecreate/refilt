@@ -1,6 +1,6 @@
 {
   "name": "refilt",
-  "version": "3.2.4",
+  "version": "3.2.5",
   "description": "For filtering and sorting products based on a JSON object.",
   "main": "dist/js/refilt.min.js",
   "homepage": "http://coalescecreate.com",

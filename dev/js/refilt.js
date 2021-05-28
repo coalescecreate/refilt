@@ -1309,9 +1309,13 @@
 				}
 
 				if(sortBy === 'price') {
-					price = parseFloat(sortWith.price.priceAsNumber, 10);
-					if(sortWith.price.soldout) price = sortDir === 'dsc' ? 0 : 999999999;
-					sortArr[i][sortBy] = price;
+					if(sortWith.price) {
+						price = parseFloat(sortWith.price.priceAsNumber, 10);
+						if(sortWith.price.soldout) price = sortDir === 'dsc' ? 0 : 999999999;
+						sortArr[i][sortBy] = price;
+					} else {
+						sortArr[i][sortBy] = sortDir === 'dsc' ? 0 : 999999999;
+					}
 				} else if(sortBy === 'news') {
 					sortArr[i][sortBy] = sortWith.price.newProduct ? 0 : 10;
 				} else {
